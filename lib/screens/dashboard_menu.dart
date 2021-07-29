@@ -1,9 +1,9 @@
-import 'package:doaku/screens/setting_screen.dart';
+import 'package:doaku/screens/more/setting_screen.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
 
-import 'beranda_screen.dart';
+import 'beranda/beranda_screen.dart';
 
 class DashboardMenu extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
 
   static List<Widget> _widgetOptions = <Widget>[
     BerandaScreen(),
-    SettingScreen(),
+    MoreScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -71,10 +71,11 @@ class _DashboardMenuState extends State<DashboardMenu> {
       body: _widgetOptions[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         elevation: 5,
+        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_filled),
-            label: 'Home',
+            label: 'Doa',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

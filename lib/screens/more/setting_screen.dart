@@ -2,14 +2,13 @@ import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
 
-class SettingScreen extends StatefulWidget {
+class MoreScreen extends StatefulWidget {
   @override
-  _SettingScreenState createState() => _SettingScreenState();
+  _MoreScreenState createState() => _MoreScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class _MoreScreenState extends State<MoreScreen> {
   double _height;
-
   double _width;
 
   @override
@@ -286,7 +285,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Widget containers() {
     return Container(
-//          color: kTesterContainer,
       height: _height * 0.5,
       width: _width,
       margin: EdgeInsets.all(10.0),

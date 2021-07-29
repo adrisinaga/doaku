@@ -9,5 +9,6 @@ class AppColor{
   static const Color kYellow = Color(0xFFFFF200);
   static const Color kWhite = Colors.white;
   static const Color kCream = Color(0xffF7EFDF);
+  static const Color kGrey = Colors.grey;
 }
 
