@@ -3,8 +3,8 @@ import 'package:doaku/utils/lib.dart';
 import 'package:flutter/material.dart';
 
 class AppbarCustom extends StatelessWidget {
-  final Widget title;
-  const AppbarCustom({Key key,this.title}) : super(key: key);
+  final Widget? title;
+  const AppbarCustom({Key? key,this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

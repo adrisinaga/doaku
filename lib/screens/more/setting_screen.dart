@@ -8,8 +8,8 @@ class MoreScreen extends StatefulWidget {
 }
 
 class _MoreScreenState extends State<MoreScreen> {
-  double _height;
-  double _width;
+  double? _height;
+  double? _width;
 
   @override
   void initState() {
@@ -183,7 +183,7 @@ class _MoreScreenState extends State<MoreScreen> {
 
   Widget containerComment() {
     return Container(
-      height: _height * 0.5,
+      height: _height! * 0.5,
 //            color: kTesterContainer,
       margin: EdgeInsets.all(10),
       child: Column(
@@ -239,7 +239,7 @@ class _MoreScreenState extends State<MoreScreen> {
                         controller: textCommentController,
                         textCapitalization: TextCapitalization.words,
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return 'Please enter some comment';
                           }
                           return null;
@@ -285,7 +285,7 @@ class _MoreScreenState extends State<MoreScreen> {
 
   Widget containers() {
     return Container(
-      height: _height * 0.5,
+      height: _height! * 0.5,
       width: _width,
       margin: EdgeInsets.all(10.0),
       child: Column(

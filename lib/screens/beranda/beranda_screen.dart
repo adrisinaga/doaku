@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:doaku/screens/beranda/add_pray_screen.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -7,39 +8,47 @@ import 'package:flutter/material.dart';
 class BerandaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      isAlwaysShown: true,
-      child: ListView(
-        children: [
-          spacer10,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ItemDoa(),
-          ),
-          spacer10,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ItemDoa(),
-          ),
-          spacer10,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ItemDoa(),
-          ),
-          spacer10,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ItemDoa(),
-          ),
-          spacer10,
-        ],
+    return Scaffold(
+      body: Scrollbar(
+        isAlwaysShown: true,
+        child: ListView(
+          children: [
+            spacer10,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ItemDoa(),
+            ),
+            spacer10,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ItemDoa(),
+            ),
+            spacer10,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ItemDoa(),
+            ),
+            spacer10,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ItemDoa(),
+            ),
+            spacer10,
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColor.kBlue,
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AddPrayScreen())),
+        child: Icon(Icons.plumbing_sharp),
       ),
     );
   }
 }
 
 class ItemDoa extends StatelessWidget {
-  const ItemDoa({Key key}) : super(key: key);
+  const ItemDoa({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,18 +112,21 @@ class ItemDoa extends StatelessWidget {
         Row(
           children: [
             Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.clean_hands_rounded,
-                    size: 20,
+                  ImageIcon(
+                    AssetImage("assets/images/icon_pray.png"),
+                    size: 18,
                     color: AppColor.kBlue,
                   ),
                   SizedBox(width: 5),
-                  Text('Doakan sekarang',style: TextStyle(color: AppColor.kBlue),),
+                  Text(
+                    'Doakan sekarang',
+                    style: TextStyle(color: AppColor.kBlue),
+                  ),
                 ],
               ),
             ),
@@ -128,10 +140,10 @@ class ItemDoa extends StatelessWidget {
 }
 
 class ItemMenu extends StatelessWidget {
-  final String namaDoa;
-  final Widget screen;
+  final String? namaDoa;
+  final Widget? screen;
 
-  const ItemMenu({Key key, this.namaDoa, this.screen}) : super(key: key);
+  const ItemMenu({Key? key, this.namaDoa, this.screen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +176,7 @@ class ItemMenu extends StatelessWidget {
 
                 Navigator.of(context).push(PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) {
-                  return screen;
+                  return screen!;
                 }, transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                   return FadeTransition(
@@ -187,7 +199,7 @@ class ItemMenu extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    namaDoa,
+                    namaDoa!,
                     style: TextStyle(
                       fontSize: 16,
                     ),

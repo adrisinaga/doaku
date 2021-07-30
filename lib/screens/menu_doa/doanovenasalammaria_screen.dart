@@ -14,7 +14,7 @@ class _NovenaTigaKaliSalamMariaScreenState
   static int currentStep = 0;
   bool complete = false;
   StepperType stepperType = StepperType.vertical;
-  BuildContext context;
+
 
   static var spacer50 = SizedBox(height: 50);
   static var spacer10 = SizedBox(height: 10);
@@ -201,8 +201,8 @@ class _NovenaTigaKaliSalamMariaScreenState
                     },
                     onStepCancel: cancel,
                     controlsBuilder: (BuildContext context,
-                        {VoidCallback onStepContinue,
-                        VoidCallback onStepCancel}) {
+                        {VoidCallback? onStepContinue,
+                        VoidCallback? onStepCancel,}) {
                       return Padding(
                         padding: const EdgeInsets.only(top: 30.0),
                         child: Container(
