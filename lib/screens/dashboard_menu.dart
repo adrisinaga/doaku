@@ -1,4 +1,5 @@
 import 'package:doaku/screens/more/setting_screen.dart';
+import 'package:doaku/screens/renungan/renungan_screen.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
 
   static List<Widget> _widgetOptions = <Widget>[
     BerandaScreen(),
+    RenunganScreen(),
     MoreScreen(),
   ];
 
@@ -74,8 +76,14 @@ class _DashboardMenuState extends State<DashboardMenu> {
         unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled),
+            icon: Icon(
+              Icons.pan_tool_outlined,
+            ),
             label: 'Doa',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            label: 'Renungan',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

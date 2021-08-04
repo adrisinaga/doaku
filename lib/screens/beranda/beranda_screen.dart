@@ -12,6 +12,8 @@ class BerandaScreen extends StatelessWidget {
       body: Scrollbar(
         isAlwaysShown: true,
         child: ListView(
+          addAutomaticKeepAlives: false,
+          addRepaintBoundaries: false,
           children: [
             spacer10,
             Padding(
@@ -41,7 +43,7 @@ class BerandaScreen extends StatelessWidget {
         backgroundColor: AppColor.kBlue,
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => AddPrayScreen())),
-        child: Icon(Icons.plumbing_sharp),
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -72,21 +74,14 @@ class ItemDoa extends StatelessWidget {
                   children: [
                     Text(
                       'Maria Lestari',
-                      style: TextStyle(
-                        color: AppColor.kBlack,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
+                      style: styleSmallDetail.copyWith(fontWeight: FontWeight.bold,color: AppColor.kBlack),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     spacer10,
                     Text(
                       'Berkatilah saudara kami agar mendapat panggilan kerja.',
-                      style: TextStyle(
-                          color: AppColor.kBlack,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400),
+                      style: styleDeveloper,
                       maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -95,10 +90,7 @@ class ItemDoa extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Text(
                         '04 Feb 2021 . 17:22',
-                        style: TextStyle(
-                            color: Colors.black26,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500),
+                        style: styleSmallDetail,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
