@@ -8,6 +8,7 @@ class RenunganScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBarCustom(text: 'Renungan'),
       body: Center(
         child: Text('Coming soon'),
       ),

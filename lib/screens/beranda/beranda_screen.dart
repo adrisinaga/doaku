@@ -9,6 +9,8 @@ class BerandaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.kCream,
+      appBar: AppBarCustom(text: 'DoaKu',description: 'Doa adalah nafas hidup',isBack: false),
       body: Scrollbar(
         isAlwaysShown: true,
         child: ListView(
@@ -21,29 +23,15 @@ class BerandaScreen extends StatelessWidget {
               child: ItemDoa(),
             ),
             spacer10,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ItemDoa(),
-            ),
-            spacer10,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ItemDoa(),
-            ),
-            spacer10,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ItemDoa(),
-            ),
-            spacer10,
+
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColor.kBlue,
+        backgroundColor: AppColor.kBlack,
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => AddPrayScreen())),
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, size: 45,color: AppColor.kWhite,),
       ),
     );
   }
@@ -59,7 +47,16 @@ class ItemDoa extends StatelessWidget {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: AppColor.kWhite, borderRadius: BorderRadius.circular(10)),
+            color: AppColor.kCream2,
+            boxShadow: [
+              boxShadow,
+            ],
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(10),
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Container(
@@ -68,24 +65,27 @@ class ItemDoa extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Maria Lestari',
-                      style: styleSmallDetail.copyWith(fontWeight: FontWeight.bold,color: AppColor.kBlack),
+                      style: styleSmallDetail.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.kBlack),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     spacer10,
                     Text(
                       'Berkatilah saudara kami agar mendapat panggilan kerja.',
-                      style: styleDeveloper,
+                      style: styleDeveloper.copyWith(fontSize: 15),
                       maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    spacer10,
+                    spacer5,
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
@@ -100,32 +100,73 @@ class ItemDoa extends StatelessWidget {
             ),
           ),
         ),
-        spacer10,
+        // spacer10,
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ImageIcon(
-                    AssetImage("assets/images/icon_pray.png"),
-                    size: 18,
-                    color: AppColor.kBlue,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    'Doakan sekarang',
-                    style: TextStyle(color: AppColor.kBlue),
-                  ),
+            Container(
+              decoration: BoxDecoration(
+                color: AppColor.kCream2,
+                boxShadow: [
+                  boxShadow
                 ],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              child: Material(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+                color: Colors.transparent,
+                child: InkWell(
+                  splashColor: AppColor.kBlue,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                  onTap: (){},
+                  child: Padding(
+                    padding:const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ImageIcon(
+                          AssetImage("assets/images/icon_pray.png"),
+                          size: 20,
+                          color: AppColor.kBlueLight,
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Doakan Sekarang',
+                              style: styleSmallDetail.copyWith(
+                                fontSize: 12,
+                                color: AppColor.kBlueLight,
+                              ),
+                            ),
+                            Text(
+                              '43 orang berdoa',
+                              style: styleSmallDetail.copyWith(
+                                fontSize: 9,
+                                color: AppColor.kBlack,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
         ),
-        spacer10,
-        Divider(thickness: 1),
       ],
     );
   }

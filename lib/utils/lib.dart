@@ -12,11 +12,106 @@ const styleAppbar2 = TextStyle(
 
 const spacer50 = SizedBox(height: 50);
 const spacer10 = SizedBox(height: 10);
+const spacer5 = SizedBox(height: 5);
 
 const styleTitle = TextStyle(fontSize: 18.0);
 const styleText = TextStyle(fontSize: 20.0);
 const styleDeveloper = TextStyle(fontSize: 16.0);
 const styleSmallDetail = TextStyle(fontSize: 12.0, color: Colors.grey);
+
+const boxShadow = BoxShadow(
+  color: Colors.black12,
+  offset: Offset(3, 3),
+  blurRadius: 3,
+  spreadRadius: 0,
+);
+
+class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
+  const AppBarCustom({Key? key, this.text, this.isBack=false, this.description,this.isTambahDoa=false})
+      : super(key: key);
+
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  final String? text;
+  final String? description;
+  final bool? isBack;
+  final bool? isTambahDoa;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: (isBack!)
+          ? GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back))
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(80.0),
+                child: Image.asset(
+                  'assets/images/appstore.png',
+                ),
+              ),
+            ),
+      centerTitle: true,
+      actions: [
+        (isTambahDoa!)?Padding(
+          padding: const EdgeInsets.only(right: 10, top: 15, bottom: 15),
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              // background color
+              primary: AppColor.kWhite,
+            ),
+            child: Text('Berdoa',
+                style: styleSmallDetail.copyWith(color: AppColor.kBlack)),
+          ),
+        ):Container(),
+      ],
+      title: (description == null)
+          ? Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: text,
+                    style: styleAppbar1,
+                  ),
+                ],
+              ),
+            )
+          : Column(
+              children: [
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: text,
+                        style: styleAppbar1,
+                      ),
+                    ],
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: (description != null) ? description : '',
+                        style: styleAppbar2,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          color: AppColor.kBlack,
+        ),
+      ),
+    );
+  }
+}
 
 const doaAkuPercaya = Text(
     "Aku percaya akan Allah, Bapa yang Maha Kuasa, pencipta langit dan bumi. Dan akan Yesus Kristus, PuteraNya yang tunggal, Tuhan kita. Yang dikandung dari Roh Kudus, dilahirkan oleh perawan Maria. Yang menderita sengsara, dalam pemerintahan Pontius Pilatus, disalibkan, wafat dan dimakamkan. Yang turun ketempat penantian, pada hari ketiga bangkit dari antara orang mati. Yang naik ke surga, duduk disebelah kanan Allah Bapa yang Maha Kuasa. Dari situ Ia akan datang mengadili orang hidup dan mati. Aku percaya akan Roh Kudus, Gereja Katholik yang Kudus, Persekutuan para Kudus, pengampunan dosa, kebangkitan badan, kehidupan kekal. Amin");

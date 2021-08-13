@@ -1,3 +1,4 @@
+import 'package:doaku/screens/more/account_screen.dart';
 import 'package:doaku/screens/more/setting_screen.dart';
 import 'package:doaku/screens/renungan/renungan_screen.dart';
 import 'package:doaku/utils/lib.dart';
@@ -17,7 +18,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
   static List<Widget> _widgetOptions = <Widget>[
     BerandaScreen(),
     RenunganScreen(),
-    MoreScreen(),
+    AccountScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -29,70 +30,53 @@ class _DashboardMenuState extends State<DashboardMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(80.0),
-            child: Image.asset(
-              'assets/images/appstore.png',
-            ),
-          ),
-        ),
-        centerTitle: true,
-        title: Column(
-          children: [
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'DoaKu',
-                    style: styleAppbar1,
-                  ),
-                ],
-              ),
-            ),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Doa adalah nafas hidup',
-                    style: styleAppbar2,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            color: AppColor.kBlack,
-          ),
-        ),
-      ),
       body: _widgetOptions[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         elevation: 5,
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w400),
-        items: const <BottomNavigationBarItem>[
+        selectedLabelStyle: TextStyle(fontSize: 13),
+        unselectedLabelStyle:
+            TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.pan_tool_outlined,
+            icon: CircleAvatar(
+              radius: 15,
+              backgroundColor:
+                  (_selectedIndex == 0) ? AppColor.kCream2 : Colors.transparent,
+              child: Icon(
+                Icons.pan_tool_outlined,
+                color: AppColor.kBlack,
+              ),
             ),
             label: 'Doa',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
+            icon: CircleAvatar(
+              radius: 15,
+              backgroundColor:
+                  (_selectedIndex == 1) ? AppColor.kCream2 : Colors.transparent,
+              child: Icon(
+                Icons.calendar_today,
+                color: AppColor.kBlack,
+              ),
+            ),
             label: 'Renungan',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'More',
+            icon: CircleAvatar(
+              radius: 15,
+              backgroundColor:
+                  (_selectedIndex == 2) ? AppColor.kCream2 : Colors.transparent,
+              child: Icon(
+                Icons.account_circle_sharp,
+                color: AppColor.kBlack,
+              ),
+            ),
+            label: 'Akun',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: AppColor.kBlack,
-        onTap:(int i)=> _onItemTapped(i),
+        onTap: (int i) => _onItemTapped(i),
       ),
     );
   }

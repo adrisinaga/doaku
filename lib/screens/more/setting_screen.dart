@@ -103,9 +103,7 @@ class _MoreScreenState extends State<MoreScreen> {
           child: Text.rich(
             TextSpan(
               children: [
-                TextSpan(
-                    text: 'Comment Section!',
-                    style: styleDeveloper),
+                TextSpan(text: 'Comment Section!', style: styleDeveloper),
                 TextSpan(
                   text:
                       '\nWe are happy if you have more ideas to us in order to add some features, list of pray of something else...',
@@ -130,11 +128,12 @@ class _MoreScreenState extends State<MoreScreen> {
               return null;
             },
             minLines: 1,
-            maxLines: 10,cursorColor: AppColor.kYellow,
+            maxLines: 10,
+            cursorColor: AppColor.kYellow,
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
-              contentPadding: new EdgeInsets.symmetric(
-                  vertical: 25.0, horizontal: 10.0),
+              contentPadding:
+                  new EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
               border: InputBorder.none,
               // border: new OutlineInputBorder(
               //   borderRadius: new BorderRadius.circular(5.0),
@@ -156,7 +155,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   print('button send ditekan');
                   print(textCommentController.text.toString());
                 },
-                icon: Icon(Icons.send,color: AppColor.kBlack),
+                icon: Icon(Icons.send, color: AppColor.kBlack),
               ),
             ),
           ),
@@ -186,11 +185,10 @@ class _MoreScreenState extends State<MoreScreen> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBarCustom(text: 'Setting'),
       body: ListView(
         children: [
           containers(),
-
-
         ],
       ),
     );
