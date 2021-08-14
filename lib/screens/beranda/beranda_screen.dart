@@ -1,44 +1,69 @@
 import 'dart:ui';
 
+import 'package:doaku/core/cubit/doa_cubit.dart';
 import 'package:doaku/screens/beranda/add_pray_screen.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BerandaScreen extends StatelessWidget {
+  void loadData(BuildContext context) async {
+    await context.read<DoaCubit>().getDoa();
+  }
+
   @override
   Widget build(BuildContext context) {
+    loadData(context);
     return Scaffold(
       backgroundColor: AppColor.kCream,
-      appBar: AppBarCustom(text: 'DoaKu',description: 'Doa adalah nafas hidup',isBack: false),
-      body: Scrollbar(
-        isAlwaysShown: true,
-        child: ListView(
-          addAutomaticKeepAlives: false,
-          addRepaintBoundaries: false,
-          children: [
-            spacer10,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ItemDoa(),
-            ),
-            spacer10,
-
-          ],
-        ),
+      appBar: AppBarCustom(
+          text: 'DoaKu', description: 'Doa adalah nafas hidup', isBack: false),
+      body: BlocBuilder<DoaCubit, DoaState>(
+        builder: (context, state) {
+          if (state is DoaLoaded) {
+            return (state.doaModel.data != null)
+                ? ListView.builder(
+                    addAutomaticKeepAlives: false,
+                    addRepaintBoundaries: false,
+                    itemCount: state.doaModel.data!.length,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: ItemDoa(
+                        isiDoa: state.doaModel.data![index].isiDoa,
+                      ),
+                    ),
+                  )
+                : Container();
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColor.kBlack,
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AddPrayScreen())),
-        child: Icon(Icons.add, size: 45,color: AppColor.kWhite,),
+      floatingActionButton: Container(
+        height: 50.0,
+        width: 50.0,
+        child: FittedBox(
+          child: FloatingActionButton(
+            backgroundColor: AppColor.kBlack,
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddPrayScreen())),
+            child: Icon(
+              Icons.add,
+              size: 35,
+              color: AppColor.kWhite,
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
 class ItemDoa extends StatelessWidget {
-  const ItemDoa({Key? key}) : super(key: key);
+  const ItemDoa({Key? key, this.isiDoa}) : super(key: key);
+  final String? isiDoa;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +105,7 @@ class ItemDoa extends StatelessWidget {
                     ),
                     spacer10,
                     Text(
-                      'Berkatilah saudara kami agar mendapat panggilan kerja.',
+                      isiDoa!,
                       style: styleDeveloper.copyWith(fontSize: 15),
                       maxLines: 5,
                       overflow: TextOverflow.ellipsis,
@@ -107,9 +132,7 @@ class ItemDoa extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: AppColor.kCream2,
-                boxShadow: [
-                  boxShadow
-                ],
+                boxShadow: [boxShadow],
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10),
@@ -127,9 +150,10 @@ class ItemDoa extends StatelessWidget {
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10),
                   ),
-                  onTap: (){},
+                  onTap: () {},
                   child: Padding(
-                    padding:const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,

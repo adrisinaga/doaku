@@ -1,3 +1,4 @@
+import 'package:doaku/screens/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +60,9 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
         (isTambahDoa!)?Padding(
           padding: const EdgeInsets.only(right: 10, top: 15, bottom: 15),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context, MaterialPageRoute(builder: (_)=>DashboardMenu()));
+            },
             style: ElevatedButton.styleFrom(
               // background color
               primary: AppColor.kWhite,
