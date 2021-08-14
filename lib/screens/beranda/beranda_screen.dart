@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:doaku/core/cubit/doa_cubit.dart';
+import 'package:doaku/core/model/doa_model.dart';
 import 'package:doaku/screens/beranda/add_pray_screen.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
@@ -21,23 +22,30 @@ class BerandaScreen extends StatelessWidget {
           text: 'DoaKu', description: 'Doa adalah nafas hidup', isBack: false),
       body: BlocBuilder<DoaCubit, DoaState>(
         builder: (context, state) {
-          if (state is DoaLoaded) {
+          if (state is GetDoaLoaded) {
+            // print(state.doaModel.data!.sort((a,b)=>a.updatedAt!.compareTo(b.updatedAt!)));
+            // print(state.doaModel.data!.sort());
+            List<Datum>? listDoa = state.doaModel.data!;
+            listDoa.sort((a, b) => b.updatedAt!.compareTo(a.updatedAt!));
             return (state.doaModel.data != null)
                 ? ListView.builder(
                     addAutomaticKeepAlives: false,
                     addRepaintBoundaries: false,
-                    itemCount: state.doaModel.data!.length,
+                    itemCount: listDoa.length,
                     itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, bottom: 10, top: 10),
                       child: ItemDoa(
-                        isiDoa: state.doaModel.data![index].isiDoa,
+                        isiDoa: listDoa[index].isiDoa!,
                       ),
                     ),
                   )
                 : Container();
           } else {
-            return CircularProgressIndicator();
+            return Center(
+                child: CircularProgressIndicator(
+              color: AppColor.kBlack,
+            ));
           }
         },
       ),
@@ -72,7 +80,8 @@ class ItemDoa extends StatelessWidget {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: AppColor.kCream2,
+            // color: AppColor.kCream2,
+            color: AppColor.kWhite,
             boxShadow: [
               boxShadow,
             ],
@@ -94,19 +103,22 @@ class ItemDoa extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Maria Lestari',
-                      style: styleSmallDetail.copyWith(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.kBlack),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    // Text(
+                    //   'Maria Lestari',
+                    //   style: styleSmallDetail.copyWith(
+                    //       fontSize: 13,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: AppColor.kBlack),
+                    //   maxLines: 2,
+                    //   overflow: TextOverflow.ellipsis,
+                    // ),
                     spacer10,
                     Text(
-                      isiDoa!,
-                      style: styleDeveloper.copyWith(fontSize: 15),
+                      isiDoa!.inCaps,
+                      style: styleDeveloper.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                      ),
                       maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -131,7 +143,8 @@ class ItemDoa extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: AppColor.kCream2,
+                // color: AppColor.kCream2,
+                color: AppColor.kWhite,
                 boxShadow: [boxShadow],
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(10),

@@ -1,8 +1,8 @@
 import 'package:doaku/core/cubit/doa_cubit.dart';
 import 'package:doaku/utils/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:doaku/screens/dashboard_menu.dart';
-import 'package:doaku/utils/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => DoaCubit()),
+        BlocProvider(create: (_) => PostDoaCubit()),
       ],
       child: MaterialApp(
         title: AppConst.doaku,
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           primarySwatch: Colors.blue,
           brightness: Brightness.light,
+          accentColorBrightness: Brightness.light,
           accentColor: Colors.white,
           hintColor: Color(0xFF9E9E9E),
           pageTransitionsTheme: PageTransitionsTheme(

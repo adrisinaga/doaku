@@ -2,21 +2,40 @@ part of 'doa_cubit.dart';
 
 abstract class DoaState extends Equatable{
   const DoaState();
-
   @override
   List<Object> get props=>[];
 }
 
-class DoaLoading extends DoaState{}
-class DoaLoaded extends DoaState{
+class GetDoaLoading extends DoaState{}
+class GetDoaLoaded extends DoaState{
   final DoaModel doaModel;
-  DoaLoaded(this.doaModel);
+  GetDoaLoaded(this.doaModel);
   @override
   List<Object> get props => [doaModel];
 }
-class DoaFailed extends DoaState{
+class GetDoaFailed extends DoaState{
   final String message;
-  DoaFailed(this.message);
+  GetDoaFailed(this.message);
+  @override
+  List<Object> get props => [message];
+}
+
+
+abstract class PostDoaState extends Equatable{
+  const PostDoaState();
+  @override
+  List<Object> get props=>[];
+}
+class PostDoaLoading extends PostDoaState{}
+class PostDoaLoaded extends PostDoaState{
+  final ResponsePostDoa doaModel;
+  PostDoaLoaded(this.doaModel);
+  @override
+  List<Object> get props => [doaModel];
+}
+class PostDoaFailed extends PostDoaState{
+  final String message;
+  PostDoaFailed(this.message);
   @override
   List<Object> get props => [message];
 }

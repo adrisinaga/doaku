@@ -1,24 +1,44 @@
+import 'package:doaku/core/cubit/doa_cubit.dart';
+import 'package:doaku/screens/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddPrayScreen extends StatelessWidget {
   AddPrayScreen({Key? key}) : super(key: key);
   final textCommentController = TextEditingController();
 
+  void postDoa(BuildContext context) async {
+    await context.read<PostDoaCubit>().postDoa(textCommentController.text, '1');
+    await context.read<DoaCubit>().getDoa();
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => DashboardMenu()));
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.kCream,
-      appBar: AppBarCustom(text: 'Tambah Doa', isBack: true, isTambahDoa: true),
+      appBar: AppBarCustom(
+        text: 'Tambah Doa',
+        isBack: true,
+        tambahDoa: () {
+          if (textCommentController.text.isNotEmpty) {
+            postDoa(context);
+          } else {
+            print('sdasd');
+          }
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Text(
                 'Wujud Doa',
                 style: styleText.copyWith(

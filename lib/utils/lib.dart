@@ -1,4 +1,3 @@
-import 'package:doaku/screens/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
 
@@ -27,15 +26,26 @@ const boxShadow = BoxShadow(
   spreadRadius: 0,
 );
 
+extension CapExtension on String {
+  String get inCaps => this.length > 0 ?'${this[0].toUpperCase()}${this.substring(1)}':'';
+  String get allInCaps => this.toUpperCase();
+  String get capitalizeFirstofEach => this.replaceAll(RegExp(' +'), ' ').split(" ").map((str) => str.inCaps).join(" ");
+}
+
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarCustom({Key? key, this.text, this.isBack=false, this.description,this.isTambahDoa=false})
+  const AppBarCustom(
+      {Key? key,
+      this.text,
+      this.isBack = false,
+      this.description,
+      this.tambahDoa})
       : super(key: key);
 
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   final String? text;
   final String? description;
   final bool? isBack;
-  final bool? isTambahDoa;
+  final VoidCallback? tambahDoa;
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +67,20 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
             ),
       centerTitle: true,
       actions: [
-        (isTambahDoa!)?Padding(
-          padding: const EdgeInsets.only(right: 10, top: 15, bottom: 15),
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context, MaterialPageRoute(builder: (_)=>DashboardMenu()));
-            },
-            style: ElevatedButton.styleFrom(
-              // background color
-              primary: AppColor.kWhite,
-            ),
-            child: Text('Berdoa',
-                style: styleSmallDetail.copyWith(color: AppColor.kBlack)),
-          ),
-        ):Container(),
+        (tambahDoa != null)
+            ? Padding(
+                padding: const EdgeInsets.only(right: 10, top: 15, bottom: 15),
+                child: ElevatedButton(
+                  onPressed: tambahDoa,
+                  style: ElevatedButton.styleFrom(
+                    // background color
+                    primary: AppColor.kWhite,
+                  ),
+                  child: Text('Berdoa',
+                      style: styleSmallDetail.copyWith(color: AppColor.kBlack)),
+                ),
+              )
+            : Container(),
       ],
       title: (description == null)
           ? Text.rich(
