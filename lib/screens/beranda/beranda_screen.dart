@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:doaku/core/cubit/doa_cubit.dart';
 import 'package:doaku/core/model/doa_model.dart';
 import 'package:doaku/screens/beranda/add_pray_screen.dart';
@@ -20,34 +21,37 @@ class BerandaScreen extends StatelessWidget {
       backgroundColor: AppColor.kCream,
       appBar: AppBarCustom(
           text: 'DoaKu', description: 'Doa adalah nafas hidup', isBack: false),
-      body: BlocBuilder<DoaCubit, DoaState>(
-        builder: (context, state) {
-          if (state is GetDoaLoaded) {
-            // print(state.doaModel.data!.sort((a,b)=>a.updatedAt!.compareTo(b.updatedAt!)));
-            // print(state.doaModel.data!.sort());
-            List<Datum>? listDoa = state.doaModel.data!;
-            listDoa.sort((a, b) => b.updatedAt!.compareTo(a.updatedAt!));
-            return (state.doaModel.data != null)
-                ? ListView.builder(
-                    addAutomaticKeepAlives: false,
-                    addRepaintBoundaries: false,
-                    itemCount: listDoa.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.only(
-                          left: 10, right: 10, bottom: 10, top: 10),
-                      child: ItemDoa(
-                        isiDoa: listDoa[index].isiDoa!,
+      body: ColorfulSafeArea(
+        color: AppColor.kBlue,
+        child: BlocBuilder<DoaCubit, DoaState>(
+          builder: (context, state) {
+            if (state is GetDoaLoaded) {
+              // print(state.doaModel.data!.sort((a,b)=>a.updatedAt!.compareTo(b.updatedAt!)));
+              // print(state.doaModel.data!.sort());
+              List<Datum>? listDoa = state.doaModel.data!;
+              listDoa.sort((a, b) => b.updatedAt!.compareTo(a.updatedAt!));
+              return (state.doaModel.data != null)
+                  ? ListView.builder(
+                      addAutomaticKeepAlives: false,
+                      addRepaintBoundaries: false,
+                      itemCount: listDoa.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, bottom: 10, top: 10),
+                        child: ItemDoa(
+                          isiDoa: listDoa[index].isiDoa!,
+                        ),
                       ),
-                    ),
-                  )
-                : Container();
-          } else {
-            return Center(
-                child: CircularProgressIndicator(
-              color: AppColor.kBlack,
-            ));
-          }
-        },
+                    )
+                  : Container();
+            } else {
+              return Center(
+                  child: CircularProgressIndicator(
+                color: AppColor.kBlack,
+              ));
+            }
+          },
+        ),
       ),
       floatingActionButton: Container(
         height: 50.0,

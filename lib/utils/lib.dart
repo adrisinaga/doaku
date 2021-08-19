@@ -50,6 +50,13 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: AppColor.kCream2, // status bar and navigation bar color
+      brightness: Brightness.light, // status bar brightness
+      // flexibleSpace: Container(
+      //   decoration: BoxDecoration(
+      //     color: AppColor.kCream,
+      //   ),
+      // ),
       leading: (isBack!)
           ? GestureDetector(
               onTap: () {
@@ -88,7 +95,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   TextSpan(
                     text: text,
-                    style: styleAppbar1,
+                    style: styleAppbar1.copyWith(color: AppColor.kBlack),
                   ),
                 ],
               ),
@@ -100,7 +107,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       TextSpan(
                         text: text,
-                        style: styleAppbar1,
+                        style: styleAppbar1.copyWith(color: AppColor.kBlack),
                       ),
                     ],
                   ),
@@ -110,18 +117,14 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       TextSpan(
                         text: (description != null) ? description : '',
-                        style: styleAppbar2,
+                        style: styleAppbar2.copyWith(color: AppColor.kBlack),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-      flexibleSpace: Container(
-        decoration: BoxDecoration(
-          color: AppColor.kBlack,
-        ),
-      ),
+
     );
   }
 }
