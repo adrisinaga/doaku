@@ -8,49 +8,92 @@ import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
-class BerandaScreen extends StatelessWidget {
-  void loadData(BuildContext context) async {
+class BerandaScreen extends StatefulWidget {
+  @override
+  _BerandaScreenState createState() => _BerandaScreenState();
+}
+
+class _BerandaScreenState extends State<BerandaScreen> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  new GlobalKey<RefreshIndicatorState>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Future<void> loadData(BuildContext context) async {
     await context.read<DoaCubit>().getDoa();
+  }
+
+  Future<void> postBerdoa(BuildContext context,String idDoa, String idUser)async{
+     await context.read<DoaCubit>().postBerdoa(idDoa, idUser);
+  }
+
+  final bloc = DoaCubit();
+
+  @override
+  void initState() {
+    loadData(context);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    loadData(context);
+
     return Scaffold(
-      backgroundColor: AppColor.kCream,
+      key: _scaffoldKey,
+      backgroundColor: AppColor.kWhite,
       appBar: AppBarCustom(
           text: 'DoaKu', description: 'Doa adalah nafas hidup', isBack: false),
       body: ColorfulSafeArea(
         color: AppColor.kBlue,
-        child: BlocBuilder<DoaCubit, DoaState>(
-          builder: (context, state) {
-            if (state is GetDoaLoaded) {
-              // print(state.doaModel.data!.sort((a,b)=>a.updatedAt!.compareTo(b.updatedAt!)));
-              // print(state.doaModel.data!.sort());
-              List<Datum>? listDoa = state.doaModel.data!;
-              listDoa.sort((a, b) => b.updatedAt!.compareTo(a.updatedAt!));
-              return (state.doaModel.data != null)
-                  ? ListView.builder(
-                      addAutomaticKeepAlives: false,
-                      addRepaintBoundaries: false,
-                      itemCount: listDoa.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, right: 10, bottom: 10, top: 10),
-                        child: ItemDoa(
-                          isiDoa: listDoa[index].isiDoa!,
-                        ),
-                      ),
-                    )
-                  : Container();
-            } else {
-              return Center(
-                  child: CircularProgressIndicator(
-                color: AppColor.kBlack,
-              ));
-            }
+        child: RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: () async{
+            await loadData(context);
           },
+          child: BlocBuilder<DoaCubit, DoaState>(
+            builder: (context, state) {
+              if (state is GetDoaLoaded) {
+                // print(state.doaModel.data!.sort((a,b)=>a.updatedAt!.compareTo(b.updatedAt!)));
+                // print(state.doaModel.data!.sort());
+                List<Datum>? listDoa = state.doaModel.data!;
+                listDoa.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+                return (state.doaModel.data != null)
+                    ? ListView.builder(
+                        addAutomaticKeepAlives: true,
+                        addRepaintBoundaries: true,
+                        itemCount: listDoa.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, bottom: 0, top: 10),
+                          child: ItemDoa(
+                            doaModel: state.doaModel,
+                            index: state.doaModel.data!.indexOf(state.doaModel.data![index]),
+                            voidCallback: () {
+                              var idDoa = state.doaModel.data![index].id!.toString();
+                              var idUser = state.doaModel.data![index].idUser!.toString();
+                              postBerdoa(context,idDoa,idUser);
+                            },
+                          ),
+                        ),
+                      )
+                    : Container();
+              }
+              else if(state is DoaUninitialized){
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: AppColor.kBlack,
+                ));
+              }else{
+                return Container();
+                // return Center(
+                //     child: CircularProgressIndicator(
+                //       color: AppColor.kBlack,
+                //     ));
+              }
+            },
+          ),
         ),
       ),
       floatingActionButton: Container(
@@ -74,74 +117,70 @@ class BerandaScreen extends StatelessWidget {
 }
 
 class ItemDoa extends StatelessWidget {
-  const ItemDoa({Key? key, this.isiDoa}) : super(key: key);
-  final String? isiDoa;
+  const ItemDoa({Key? key, this.doaModel, this.index,this.voidCallback}) : super(key: key);
+  final DoaModel? doaModel;
+  final int? index;
+  final VoidCallback? voidCallback;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        index!=0?Divider(thickness: 2):Container(),
+        spacer10,
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
             // color: AppColor.kCream2,
             color: AppColor.kWhite,
-            boxShadow: [
-              boxShadow,
-            ],
+            // boxShadow: [
+            //   boxShadow,
+            // ],
             borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(10),
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(5),
+              topLeft: Radius.circular(5),
+              topRight: Radius.circular(5),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  // color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Text(
-                    //   'Maria Lestari',
-                    //   style: styleSmallDetail.copyWith(
-                    //       fontSize: 13,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: AppColor.kBlack),
-                    //   maxLines: 2,
-                    //   overflow: TextOverflow.ellipsis,
-                    // ),
-                    spacer10,
-                    Text(
-                      isiDoa!.inCaps,
-                      style: styleDeveloper.copyWith(
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      maxLines: 5,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    spacer5,
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        '04 Feb 2021 . 17:22',
-                        style: styleSmallDetail,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+          child: Container(
+            decoration: BoxDecoration(
+                // color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(5)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                Text(
+                  doaModel!.data![index!].isiDoa!.toString().inCaps,
+                  style: styleDeveloper.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
+                spacer5,
+                Text(
+                  'Maria Lestari',
+                  style: styleSmallDetail.copyWith(fontSize: 10),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '${doaModel!.data![index!].createdAt!.toLocal().toString()}',
+                    style: styleSmallDetail.copyWith(fontSize: 10),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        // spacer10,
+        spacer10,
+        spacer10,
+        spacer10,
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -151,33 +190,33 @@ class ItemDoa extends StatelessWidget {
                 color: AppColor.kWhite,
                 boxShadow: [boxShadow],
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
                 ),
               ),
               child: Material(
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
                 ),
                 color: Colors.transparent,
                 child: InkWell(
                   splashColor: AppColor.kBlue,
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5),
                   ),
-                  onTap: () {},
+                  onTap: voidCallback,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
+                        horizontal: 5, vertical: 2),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         ImageIcon(
                           AssetImage("assets/images/icon_pray.png"),
-                          size: 20,
+                          size: 15,
                           color: AppColor.kBlueLight,
                         ),
                         SizedBox(width: 10),
@@ -192,7 +231,7 @@ class ItemDoa extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '43 orang berdoa',
+                              '${doaModel!.data![index!].totalPrayed??'0'} orang berdoa',
                               style: styleSmallDetail.copyWith(
                                 fontSize: 9,
                                 color: AppColor.kBlack,
@@ -208,6 +247,8 @@ class ItemDoa extends StatelessWidget {
             ),
           ],
         ),
+        spacer5,
+
       ],
     );
   }

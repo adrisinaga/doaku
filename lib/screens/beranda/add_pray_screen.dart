@@ -1,5 +1,4 @@
 import 'package:doaku/core/cubit/doa_cubit.dart';
-import 'package:doaku/screens/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ class AddPrayScreen extends StatelessWidget {
   final textCommentController = TextEditingController();
 
   void postDoa(BuildContext context) async {
-    await context.read<PostDoaCubit>().postDoa(textCommentController.text, '1');
+    await context.read<DoaCubit>().postDoa(textCommentController.text, '1');
     await context.read<DoaCubit>().getDoa();
     // Navigator.pushReplacement(
     //     context, MaterialPageRoute(builder: (context) => DashboardMenu()));
@@ -21,7 +20,7 @@ class AddPrayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kCream,
+      backgroundColor: AppColor.kWhite,
       appBar: AppBarCustom(
         text: 'Tambah Doa',
         isBack: true,
@@ -29,7 +28,7 @@ class AddPrayScreen extends StatelessWidget {
           if (textCommentController.text.isNotEmpty) {
             postDoa(context);
           } else {
-            print('sdasd');
+            snackBarCustom(context,'Harus isi doa', voidCallback: null);
           }
         },
       ),

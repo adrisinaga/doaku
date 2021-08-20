@@ -12,5 +12,13 @@ class AppColor{
   static const Color kCream2 = Color(0xffFFF7E9);
   static const Color kCream3 = Color(0xffDBAB62);
   static const Color kGrey = Colors.grey;
+
+
+  static const Color primary = Color(0xff035aa6);
+  static const Color secondary = Color(0xff00909e);
+  static const Color success = Colors.green;
+  static const Color error = Colors.red;
+  static const Color warning = Colors.orange;
+  static const Color neutral = Colors.blueGrey;
 }
 

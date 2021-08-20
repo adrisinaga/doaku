@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => DoaCubit()),
-        BlocProvider(create: (_) => PostDoaCubit()),
+        // BlocProvider(create: (_) => PostDoaCubit()),
         BlocProvider(create: (_) => AuthBloc()),
       ],
       child: MaterialApp(

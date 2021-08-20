@@ -1,7 +1,8 @@
 
 
-String baseUrl = "https://carryu.id/doaku-api/";
+String baseUrl = "https://carryu.id/doa/";
 String urlDoa = "doa";
+String urlBerdoa = "berdoa";
 
 
 class AppConst{

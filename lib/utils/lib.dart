@@ -27,9 +27,28 @@ const boxShadow = BoxShadow(
 );
 
 extension CapExtension on String {
-  String get inCaps => this.length > 0 ?'${this[0].toUpperCase()}${this.substring(1)}':'';
+  String get inCaps =>
+      this.length > 0 ? '${this[0].toUpperCase()}${this.substring(1)}' : '';
+
   String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach => this.replaceAll(RegExp(' +'), ' ').split(" ").map((str) => str.inCaps).join(" ");
+
+  String get capitalizeFirstofEach => this
+      .replaceAll(RegExp(' +'), ' ')
+      .split(" ")
+      .map((str) => str.inCaps)
+      .join(" ");
+}
+
+ScaffoldFeatureController snackBarCustom(BuildContext context,String text,
+    {VoidCallback? voidCallback}) {
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content:  Text(text),
+    duration: const Duration(seconds: 10),
+    action: voidCallback!=null? SnackBarAction(
+      label: 'Ya',
+      onPressed: voidCallback,
+    ):null,
+  ));
 }
 
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
@@ -50,13 +69,18 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColor.kCream2, // status bar and navigation bar color
-      brightness: Brightness.light, // status bar brightness
-      // flexibleSpace: Container(
-      //   decoration: BoxDecoration(
-      //     color: AppColor.kCream,
-      //   ),
-      // ),
+      backgroundColor: AppColor.secondary,
+      // status bar and navigation bar color
+      brightness: Brightness.dark,
+      // status bar brightness
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [AppColor.secondary, AppColor.primary]),
+        ),
+      ),
       leading: (isBack!)
           ? GestureDetector(
               onTap: () {
@@ -95,7 +119,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   TextSpan(
                     text: text,
-                    style: styleAppbar1.copyWith(color: AppColor.kBlack),
+                    style: styleAppbar1.copyWith(color: AppColor.kWhite),
                   ),
                 ],
               ),
@@ -107,7 +131,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       TextSpan(
                         text: text,
-                        style: styleAppbar1.copyWith(color: AppColor.kBlack),
+                        style: styleAppbar1.copyWith(color: AppColor.kWhite),
                       ),
                     ],
                   ),
@@ -117,14 +141,13 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       TextSpan(
                         text: (description != null) ? description : '',
-                        style: styleAppbar2.copyWith(color: AppColor.kBlack),
+                        style: styleAppbar2.copyWith(color: AppColor.kWhite),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:doaku/screens/auth/login_screen.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kCream,
+      backgroundColor: AppColor.kWhite,
       appBar: AppBarCustom(text: 'Akun'),
       body: Scrollbar(
         isAlwaysShown: true,
@@ -38,26 +39,26 @@ class AccountScreen extends StatelessWidget {
               ),
             ),
             spacer50,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Donasi Kasih',
-                style: styleText.copyWith(
-                    fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Divider(color: AppColor.kBlack, thickness: 2),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Untuk melanjutkan beberapa fitur yang masih kurang, kami butuh dukungan kalian dalam bentuk doa dan materi. Bagi kalian yang ingin mendukung kami, silakan donasikan ke rekening di Bank BCA a.n. Diana 321328928.\n\nDonasi ini akan kami gunakan untuk pembayaran operasional, pihak ketiga, dan kebutuhan yang berkaitan dengan pengembangan aplikasi DoaKu. Terimakasih.',
-                style: styleText.copyWith(
-                    fontWeight: FontWeight.normal, fontSize: 13),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Text(
+            //     'Donasi Kasih',
+            //     style: styleText.copyWith(
+            //         fontWeight: FontWeight.bold, fontSize: 15),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Divider(color: AppColor.kBlack, thickness: 2),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: Text(
+            //     'Untuk melanjutkan beberapa fitur yang masih kurang, kami butuh dukungan kalian dalam bentuk doa dan materi. Bagi kalian yang ingin mendukung kami, silakan donasikan ke rekening di Bank BCA a.n. Diana 321328928.\n\nDonasi ini akan kami gunakan untuk pembayaran operasional, pihak ketiga, dan kebutuhan yang berkaitan dengan pengembangan aplikasi DoaKu. Terimakasih.',
+            //     style: styleText.copyWith(
+            //         fontWeight: FontWeight.normal, fontSize: 13),
+            //   ),
+            // ),
             spacer50,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -80,7 +81,30 @@ class AccountScreen extends StatelessWidget {
                       fontWeight: FontWeight.normal, fontSize: 10),
                 ),
               ),
-            )
+            ),
+
+            GestureDetector(
+              onTap: () {
+                snackBarCustom(context, 'Anda ingin logout ?',
+                    voidCallback: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Keluar',
+                    style: styleText.copyWith(
+                        decorationStyle: TextDecorationStyle.dotted,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 10),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

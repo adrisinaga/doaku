@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       bloc: bloc,
       listener: (context, state){
         if(state is AuthAuthenticated){
-          print('yow');
+          print('Authenticated');
           Navigator.pop(context);
           Navigator.push(
             context,
@@ -49,6 +49,8 @@ class _SplashScreenState extends State<SplashScreen> {
             context,
             MaterialPageRoute(builder: (context) => LoginScreen()),
           );
+        }else{
+          print('not defined');
         }
       },
       child: Material(
