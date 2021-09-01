@@ -21,8 +21,8 @@ const styleSmallDetail = TextStyle(fontSize: 12.0, color: Colors.grey);
 
 const boxShadow = BoxShadow(
   color: Colors.black12,
-  offset: Offset(3, 3),
-  blurRadius: 3,
+  offset: Offset(1, 1),
+  blurRadius: 1,
   spreadRadius: 0,
 );
 
@@ -75,10 +75,11 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
       // status bar brightness
       flexibleSpace: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [AppColor.secondary, AppColor.primary]),
+          color: AppColor.kBlack,
+            // gradient: LinearGradient(
+            //     begin: Alignment.centerLeft,
+            //     end: Alignment.centerRight,
+            //     colors: [AppColor.secondary, AppColor.primary]),
         ),
       ),
       leading: (isBack!)
@@ -87,15 +88,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
                 Navigator.pop(context);
               },
               child: Icon(Icons.arrow_back))
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(80.0),
-                child: Image.asset(
-                  'assets/images/appstore.png',
-                ),
-              ),
-            ),
+          : Container(),
       centerTitle: true,
       actions: [
         (tambahDoa != null)

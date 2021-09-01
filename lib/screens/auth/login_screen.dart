@@ -14,6 +14,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -35,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
+  Widget _entryField(String title,TextEditingController controller, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -48,12 +52,15 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 10,
           ),
-          TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
+          TextFormField(
+            controller: controller,
+            obscureText: isPassword,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+          )
         ],
       ),
     );
@@ -62,7 +69,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _submitButton() {
     return GestureDetector(
       onTap: () {
-        print('login');
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => DashboardMenu()));
       },
@@ -72,20 +78,22 @@ class _LoginScreenState extends State<LoginScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(5)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Colors.grey.shade200,
-                  offset: Offset(2, 4),
-                  blurRadius: 5,
-                  spreadRadius: 2)
-            ],
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [AppColor.secondary, AppColor.primary])),
+            color: AppColor.kBlack
+            // boxShadow: <BoxShadow>[
+            //   BoxShadow(
+            //       color: Colors.grey.shade200,
+            //       offset: Offset(2, 4),
+            //       blurRadius: 5,
+            //       spreadRadius: 2)
+            // ],
+            // gradient: LinearGradient(
+            //     begin: Alignment.centerLeft,
+            //     end: Alignment.centerRight,
+            //     colors: [AppColor.kCream2, AppColor.kCream]),
+            ),
         child: Text(
           'Login',
-          style: TextStyle(fontSize: 20, color: Colors.white),
+          style: TextStyle(fontSize: 15, color: AppColor.kWhite),
         ),
       ),
     );
@@ -224,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
             textStyle: Theme.of(context).textTheme.bodyText1,
             fontSize: 30,
             fontWeight: FontWeight.w700,
-            color: AppColor.secondary,
+            color: AppColor.kBlack,
           ),
           children: [
             TextSpan(
@@ -238,8 +246,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Email"),
-        _entryField("Password", isPassword: true),
+        _entryField("Email",emailController),
+        _entryField("Password",passwordController, isPassword: true),
       ],
     );
   }
@@ -281,8 +289,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontSize: 14, fontWeight: FontWeight.w500)),
                     ),
                   ),
-                  _divider(),
-                  _googleButton(),
+                  // _divider(),
+                  // _googleButton(),
                   SizedBox(height: height * .055),
                   _createAccountLabel(),
                 ],

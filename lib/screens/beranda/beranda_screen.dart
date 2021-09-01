@@ -6,7 +6,9 @@ import 'package:doaku/core/model/doa_model.dart';
 import 'package:doaku/screens/beranda/add_pray_screen.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -42,7 +44,7 @@ class _BerandaScreenState extends State<BerandaScreen> {
 
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: AppColor.kWhite,
+      backgroundColor: AppColor.kCream2,
       appBar: AppBarCustom(
           text: 'DoaKu', description: 'Doa adalah nafas hidup', isBack: false),
       body: ColorfulSafeArea(
@@ -61,8 +63,8 @@ class _BerandaScreenState extends State<BerandaScreen> {
                 listDoa.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
                 return (state.doaModel.data != null)
                     ? ListView.builder(
-                        addAutomaticKeepAlives: true,
-                        addRepaintBoundaries: true,
+                        addAutomaticKeepAlives: false,
+                        addRepaintBoundaries: false,
                         itemCount: listDoa.length,
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.only(
@@ -85,12 +87,9 @@ class _BerandaScreenState extends State<BerandaScreen> {
                     child: CircularProgressIndicator(
                   color: AppColor.kBlack,
                 ));
-              }else{
+              }
+              else{
                 return Container();
-                // return Center(
-                //     child: CircularProgressIndicator(
-                //       color: AppColor.kBlack,
-                //     ));
               }
             },
           ),
@@ -124,132 +123,145 @@ class ItemDoa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        index!=0?Divider(thickness: 2):Container(),
-        spacer10,
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            // color: AppColor.kCream2,
-            color: AppColor.kWhite,
-            // boxShadow: [
-            //   boxShadow,
-            // ],
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(5),
-              topLeft: Radius.circular(5),
-              topRight: Radius.circular(5),
-            ),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-                // color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(5)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                Text(
-                  doaModel!.data![index!].isiDoa!.toString().inCaps,
-                  style: styleDeveloper.copyWith(
-                    fontSize: 15,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                spacer5,
-                Text(
-                  'Maria Lestari',
-                  style: styleSmallDetail.copyWith(fontSize: 10),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '${doaModel!.data![index!].createdAt!.toLocal().toString()}',
-                    style: styleSmallDetail.copyWith(fontSize: 10),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColor.kWhite,
+        border: Border.fromBorderSide(BorderSide(color: Colors.white,width: 2)),
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(5),
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
         ),
-        spacer10,
-        spacer10,
-        spacer10,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                // color: AppColor.kCream2,
-                color: AppColor.kWhite,
-                boxShadow: [boxShadow],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(5),
-                  bottomRight: Radius.circular(5),
+      ),
+      child: Column(
+        children: [
+          // index!=0?Divider(thickness: 2):Container(),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              // color: AppColor.kCream2,
+              color: AppColor.kWhite,
+              // boxShadow: [
+              //   boxShadow,
+              // ],
+
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(5),
+                topLeft: Radius.circular(5),
+                topRight: Radius.circular(5),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    // color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(5)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    Text(
+                      doaModel!.data![index!].isiDoa!.toString().inCaps,
+                      style: styleDeveloper.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      maxLines: 5,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    // spacer5,
+                    Text(
+                      'Maria Lestari',
+                      style: styleSmallDetail.copyWith(fontSize: 10),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '${doaModel?.data?[index!].createdAt?.toLocal().toString()}',
+                        style: styleSmallDetail.copyWith(fontSize: 10),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Material(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(5),
-                  bottomRight: Radius.circular(5),
-                ),
-                color: Colors.transparent,
-                child: InkWell(
-                  splashColor: AppColor.kBlue,
+            ),
+          ),
+
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  // color: AppColor.kCream2,
+                  color: AppColor.kWhite,
+                  // boxShadow: [boxShadow],
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(5),
                     bottomRight: Radius.circular(5),
                   ),
-                  onTap: voidCallback,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5, vertical: 2),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ImageIcon(
-                          AssetImage("assets/images/icon_pray.png"),
-                          size: 15,
-                          color: AppColor.kBlueLight,
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Doakan Sekarang',
-                              style: styleSmallDetail.copyWith(
-                                fontSize: 12,
-                                color: AppColor.kBlueLight,
-                              ),
+                ),
+                child: Material(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5),
+                  ),
+                  color: Colors.transparent,
+                  child: InkWell(
+                    splashColor: AppColor.kBlue,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(5),
+                      bottomRight: Radius.circular(5),
+                    ),
+                    onTap: voidCallback,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 2),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ImageIcon(
+                            AssetImage("assets/images/icon_pray.png"),
+                            size: 15,
+                            color: AppColor.kBlueLight,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Doakan Sekarang',
+                            style: styleSmallDetail.copyWith(
+                              fontSize: 12,
+                              color: AppColor.kBlueLight,
                             ),
-                            Text(
-                              '${doaModel!.data![index!].totalPrayed??'0'} orang berdoa',
-                              style: styleSmallDetail.copyWith(
-                                fontSize: 9,
-                                color: AppColor.kBlack,
-                              ),
+                          ),
+                          Text(' - ',style: TextStyle(color: AppColor.kGrey),),
+                          Text(
+                            '${doaModel!.data![index!].totalPrayed??'0'} orang berdoa',
+                            style: styleSmallDetail.copyWith(
+                              fontSize: 9,
+                              color: AppColor.kGrey,
                             ),
-                          ],
-                        )
-                      ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        spacer5,
+            ],
+          ),
 
-      ],
+        ],
+      ),
     );
   }
 }

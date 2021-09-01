@@ -53,7 +53,6 @@ class AddPrayScreen extends StatelessWidget {
               TextFormField(
                 onChanged: (value) {},
                 controller: textCommentController,
-                textCapitalization: TextCapitalization.words,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter some comment';

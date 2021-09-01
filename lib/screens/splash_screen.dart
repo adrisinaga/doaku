@@ -49,7 +49,8 @@ class _SplashScreenState extends State<SplashScreen> {
             context,
             MaterialPageRoute(builder: (context) => LoginScreen()),
           );
-        }else{
+        }
+        else{
           print('not defined');
         }
       },
@@ -96,6 +97,9 @@ class _SplashScreenState extends State<SplashScreen> {
                       radius: 10,
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: size.height * 0.1,
                 ),
                 Expanded(
                   child: Align(
