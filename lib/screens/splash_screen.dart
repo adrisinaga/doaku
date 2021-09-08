@@ -2,8 +2,10 @@
 import 'package:doaku/core/cubit/auth/auth_bloc.dart';
 import 'package:doaku/core/cubit/auth/auth_event.dart';
 import 'package:doaku/core/cubit/auth/auth_state.dart';
+import 'package:doaku/screens/admin/admin_beranda_screen.dart';
+import 'package:doaku/screens/admin/admin_dashboard_menu.dart';
 import 'package:doaku/screens/auth/login_screen.dart';
-import 'package:doaku/screens/dashboard_menu.dart';
+import 'package:doaku/screens/user/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:doaku/utils/constant.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pop(context);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DashboardMenu()),
+            MaterialPageRoute(builder: (context) => AdminDashboardMenu()),
           );
         }
         else if(state is AuthUnauthenticated){

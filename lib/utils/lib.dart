@@ -43,7 +43,7 @@ ScaffoldFeatureController snackBarCustom(BuildContext context,String text,
     {VoidCallback? voidCallback}) {
   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content:  Text(text),
-    duration: const Duration(seconds: 10),
+    duration: const Duration(seconds: 5),
     action: voidCallback!=null? SnackBarAction(
       label: 'Ya',
       onPressed: voidCallback,

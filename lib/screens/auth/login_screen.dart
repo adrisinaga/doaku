@@ -1,5 +1,7 @@
-import 'package:doaku/screens/dashboard_menu.dart';
+import 'package:doaku/screens/admin/admin_beranda_screen.dart';
+import 'package:doaku/screens/user/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
+import 'package:doaku/utils/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'widget/bezier_container.dart';
@@ -16,7 +18,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
 
   Widget _backButton() {
     return InkWell(
@@ -39,7 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _entryField(String title,TextEditingController controller, {bool isPassword = false}) {
+  Widget _entryField(String title, TextEditingController controller,
+      {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -69,28 +71,26 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _submitButton() {
     return GestureDetector(
       onTap: () {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => DashboardMenu()));
+        if(emailController.text.isEmpty && passwordController.text.isEmpty){
+          snackBarCustom(context, 'Lengkapi data');
+        }else{
+          if(emailController.text=='admin' && passwordController.text=='admin'){
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => AdminBerandaScreen()));
+          }else{
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => DashboardMenu()));
+          }
+        }
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-            color: AppColor.kBlack
-            // boxShadow: <BoxShadow>[
-            //   BoxShadow(
-            //       color: Colors.grey.shade200,
-            //       offset: Offset(2, 4),
-            //       blurRadius: 5,
-            //       spreadRadius: 2)
-            // ],
-            // gradient: LinearGradient(
-            //     begin: Alignment.centerLeft,
-            //     end: Alignment.centerRight,
-            //     colors: [AppColor.kCream2, AppColor.kCream]),
-            ),
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: AppColor.kBlack,
+        ),
         child: Text(
           'Login',
           style: TextStyle(fontSize: 15, color: AppColor.kWhite),
@@ -246,8 +246,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Email",emailController),
-        _entryField("Password",passwordController, isPassword: true),
+        _entryField("Email", emailController),
+        _entryField("Password", passwordController, isPassword: true),
       ],
     );
   }

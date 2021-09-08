@@ -47,7 +47,7 @@ class Data {
 
   final String? isiDoa;
   final String? idUser;
-  final int? jumlahOrangBerdoa;
+  final String? jumlahOrangBerdoa;
   final DateTime? updatedAt;
   final DateTime? createdAt;
   final int? id;
@@ -55,7 +55,7 @@ class Data {
   Data copyWith({
     String? isiDoa,
     String? idUser,
-    int? jumlahOrangBerdoa,
+    String? jumlahOrangBerdoa,
     DateTime? updatedAt,
     DateTime? createdAt,
     int? id,

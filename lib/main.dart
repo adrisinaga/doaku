@@ -4,7 +4,7 @@ import 'package:doaku/screens/splash_screen.dart';
 import 'package:doaku/utils/constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:doaku/screens/dashboard_menu.dart';
+import 'package:doaku/screens/user/dashboard_menu.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';

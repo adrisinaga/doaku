@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:doaku/core/model/api_return_model.dart';
 import 'package:doaku/core/model/doa_model.dart';
@@ -21,12 +20,25 @@ class DoaCubit extends Cubit<DoaState> {
     }
   }
 
-  Future<void> postDoa(
-      String isiDoa,
-      String idUser,
-      ) async {
+  Future<void> deleteDoa(
+    String isiDoa,
+    String idUser,
+  ) async {
     ApiReturnValue<ResponsePostDoa> result =
-    await DoaService.postDoa(isiDoa, idUser);
+        await DoaService.deleteDoa(isiDoa, idUser);
+    if (result.value != null) {
+      emit(DeleteDoaLoaded(result.value!));
+    } else {
+      emit(DeleteDoaFailed('Failed'));
+    }
+  }
+
+  Future<void> postDoa(
+    String isiDoa,
+    String idUser,
+  ) async {
+    ApiReturnValue<ResponsePostDoa> result =
+        await DoaService.postDoa(isiDoa, idUser);
     if (result.value != null) {
       emit(PostDoaLoaded(result.value!));
     } else {
@@ -35,11 +47,11 @@ class DoaCubit extends Cubit<DoaState> {
   }
 
   Future<void> postBerdoa(
-      String idDoa,
-      String idUser,
-      ) async {
+    String idDoa,
+    String idUser,
+  ) async {
     ApiReturnValue<ResponsePostBerdoa> result =
-    await DoaService.postBerdoa(idDoa, idUser );
+        await DoaService.postBerdoa(idDoa, idUser);
     if (result.value != null) {
       emit(PostBerdoaLoaded());
       ApiReturnValue<DoaModel> result = await DoaService.getDoa();
@@ -53,11 +65,3 @@ class DoaCubit extends Cubit<DoaState> {
     }
   }
 }
-
-// class PostDoaCubit extends Cubit<PostDoaState> {
-//   PostDoaCubit() : super(PostDoaLoading());
-//
-//
-// }
-
-

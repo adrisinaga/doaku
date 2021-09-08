@@ -1,24 +1,21 @@
-import 'package:doaku/screens/more/account_screen.dart';
-import 'package:doaku/screens/more/setting_screen.dart';
-import 'package:doaku/screens/renungan/renungan_screen.dart';
-import 'package:doaku/utils/lib.dart';
+import 'package:doaku/screens/admin/admin_beranda_screen.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
 
-import 'beranda/beranda_screen.dart';
+import 'admin_account_screen.dart';
 
-class DashboardMenu extends StatefulWidget {
+
+class AdminDashboardMenu extends StatefulWidget {
   @override
-  _DashboardMenuState createState() => _DashboardMenuState();
+  _AdminDashboardMenuState createState() => _AdminDashboardMenuState();
 }
 
-class _DashboardMenuState extends State<DashboardMenu> {
+class _AdminDashboardMenuState extends State<AdminDashboardMenu> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions = <Widget>[
-    BerandaScreen(),
-    RenunganScreen(),
-    AccountScreen(),
+    AdminBerandaScreen(),
+    AdminAccountScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,13 +32,13 @@ class _DashboardMenuState extends State<DashboardMenu> {
         elevation: 5,
         selectedLabelStyle: TextStyle(fontSize: 13),
         unselectedLabelStyle:
-            TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+        TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: CircleAvatar(
               radius: 15,
               backgroundColor:
-                  (_selectedIndex == 0) ? AppColor.kCream2 : Colors.transparent,
+              (_selectedIndex == 0) ? AppColor.kCream2 : Colors.transparent,
               child: Icon(
                 Icons.pan_tool_outlined,
                 color: AppColor.kBlack,
@@ -53,19 +50,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
             icon: CircleAvatar(
               radius: 15,
               backgroundColor:
-                  (_selectedIndex == 1) ? AppColor.kCream2 : Colors.transparent,
-              child: Icon(
-                Icons.calendar_today,
-                color: AppColor.kBlack,
-              ),
-            ),
-            label: 'Renungan',
-          ),
-          BottomNavigationBarItem(
-            icon: CircleAvatar(
-              radius: 15,
-              backgroundColor:
-                  (_selectedIndex == 2) ? AppColor.kCream2 : Colors.transparent,
+              (_selectedIndex == 1) ? AppColor.kCream2 : Colors.transparent,
               child: Icon(
                 Icons.account_circle_sharp,
                 color: AppColor.kBlack,

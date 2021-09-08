@@ -1,5 +1,3 @@
-
-
 class ApiReturnValue<T> {
   final T? value;
   final String? message;

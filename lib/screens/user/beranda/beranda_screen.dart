@@ -3,14 +3,14 @@ import 'dart:ui';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:doaku/core/cubit/doa_cubit.dart';
 import 'package:doaku/core/model/doa_model.dart';
-import 'package:doaku/screens/beranda/add_pray_screen.dart';
 import 'package:doaku/utils/lib.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+
+import 'add_pray_screen.dart';
 
 class BerandaScreen extends StatefulWidget {
   @override
@@ -59,7 +59,7 @@ class _BerandaScreenState extends State<BerandaScreen> {
               if (state is GetDoaLoaded) {
                 // print(state.doaModel.data!.sort((a,b)=>a.updatedAt!.compareTo(b.updatedAt!)));
                 // print(state.doaModel.data!.sort());
-                List<Datum>? listDoa = state.doaModel.data!;
+                List<Datum>? listDoa = state.doaModel.data??[];
                 listDoa.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
                 return (state.doaModel.data != null)
                     ? ListView.builder(
