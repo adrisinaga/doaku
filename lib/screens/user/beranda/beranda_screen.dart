@@ -84,9 +84,7 @@ class _BerandaScreenState extends State<BerandaScreen> {
               }
               else if(state is DoaUninitialized){
                 return Center(
-                    child: CircularProgressIndicator(
-                  color: AppColor.kBlack,
-                ));
+                    child: circularProgressIndicator(context));
               }
               else{
                 return Container();

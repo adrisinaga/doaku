@@ -2,7 +2,7 @@ import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
 
 import 'beranda/beranda_screen.dart';
-import 'more/account_screen.dart';
+import 'more/more_screen.dart';
 import 'renungan/renungan_screen.dart';
 
 
@@ -70,7 +70,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
                 color: AppColor.kBlack,
               ),
             ),
-            label: 'Akun',
+            label: 'More',
           ),
         ],
         currentIndex: _selectedIndex,

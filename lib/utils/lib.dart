@@ -1,4 +1,5 @@
 import 'package:doaku/utils/color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const styleAppbar1 = TextStyle(
@@ -51,20 +52,33 @@ ScaffoldFeatureController snackBarCustom(BuildContext context,String text,
   ));
 }
 
+Widget circularProgressIndicator(BuildContext context){
+  return Align(
+    heightFactor: 0.5,
+    alignment: Alignment.center,
+    child: CupertinoTheme(
+      data: CupertinoTheme.of(context).copyWith(brightness: Brightness.light),
+      child: CupertinoActivityIndicator(
+        radius: 10,
+      ),
+    ),
+  );
+}
+
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   const AppBarCustom(
       {Key? key,
       this.text,
       this.isBack = false,
       this.description,
-      this.tambahDoa})
+      this.action})
       : super(key: key);
 
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   final String? text;
   final String? description;
   final bool? isBack;
-  final VoidCallback? tambahDoa;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -91,19 +105,8 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
           : Container(),
       centerTitle: true,
       actions: [
-        (tambahDoa != null)
-            ? Padding(
-                padding: const EdgeInsets.only(right: 10, top: 15, bottom: 15),
-                child: ElevatedButton(
-                  onPressed: tambahDoa,
-                  style: ElevatedButton.styleFrom(
-                    // background color
-                    primary: AppColor.kWhite,
-                  ),
-                  child: Text('Berdoa',
-                      style: styleSmallDetail.copyWith(color: AppColor.kBlack)),
-                ),
-              )
+        (action != null)
+            ? action!
             : Container(),
       ],
       title: (description == null)

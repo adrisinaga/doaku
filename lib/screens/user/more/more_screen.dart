@@ -8,9 +8,10 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColor.kWhite,
-      appBar: AppBarCustom(text: 'Akun'),
+      appBar: AppBarCustom(text: 'More'),
       body: Scrollbar(
         isAlwaysShown: true,
         child: ListView(
@@ -39,26 +40,6 @@ class AccountScreen extends StatelessWidget {
               ),
             ),
             spacer50,
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 20),
-            //   child: Text(
-            //     'Donasi Kasih',
-            //     style: styleText.copyWith(
-            //         fontWeight: FontWeight.bold, fontSize: 15),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 20),
-            //   child: Divider(color: AppColor.kBlack, thickness: 2),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 20),
-            //   child: Text(
-            //     'Untuk melanjutkan beberapa fitur yang masih kurang, kami butuh dukungan kalian dalam bentuk doa dan materi. Bagi kalian yang ingin mendukung kami, silakan donasikan ke rekening di Bank BCA a.n. Diana 321328928.\n\nDonasi ini akan kami gunakan untuk pembayaran operasional, pihak ketiga, dan kebutuhan yang berkaitan dengan pengembangan aplikasi DoaKu. Terimakasih.',
-            //     style: styleText.copyWith(
-            //         fontWeight: FontWeight.normal, fontSize: 13),
-            //   ),
-            // ),
             spacer50,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -83,28 +64,28 @@ class AccountScreen extends StatelessWidget {
               ),
             ),
 
-            GestureDetector(
-              onTap: () {
-                snackBarCustom(context, 'Anda ingin logout ?',
-                    voidCallback: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Keluar',
-                    style: styleText.copyWith(
-                        decorationStyle: TextDecorationStyle.dotted,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 10),
+            Container(
+              width: size.width/4,
+              child: GestureDetector(
+                onTap: (){
+                  snackBarCustom(context, 'Anda ingin logout ?',
+                      voidCallback: () {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => LoginScreen()));
+                      });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: AppColor.error,
+                      borderRadius: BorderRadius.circular(5)
                   ),
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+                      child: Text('Logout',style: TextStyle(color: AppColor.kWhite),)),
                 ),
               ),
             ),
+
           ],
         ),
       ),

@@ -24,13 +24,24 @@ class AddPrayScreen extends StatelessWidget {
       appBar: AppBarCustom(
         text: 'Tambah Doa',
         isBack: true,
-        tambahDoa: () {
-          if (textCommentController.text.isNotEmpty) {
-            postDoa(context);
-          } else {
-            snackBarCustom(context,'Harus isi doa', voidCallback: null);
-          }
-        },
+        action: Padding(
+          padding: const EdgeInsets.only(right: 10, top: 15, bottom: 15),
+          child: ElevatedButton(
+            onPressed: () {
+              if (textCommentController.text.isNotEmpty) {
+                postDoa(context);
+              } else {
+                snackBarCustom(context,'Harus isi doa', voidCallback: null);
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              // background color
+              primary: AppColor.kWhite,
+            ),
+            child: Text('Berdoa',
+                style: styleSmallDetail.copyWith(color: AppColor.kBlack)),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),

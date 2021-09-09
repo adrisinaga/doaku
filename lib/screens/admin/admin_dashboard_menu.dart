@@ -1,8 +1,9 @@
-import 'package:doaku/screens/admin/admin_beranda_screen.dart';
+import 'package:doaku/screens/admin/beranda/admin_beranda_screen.dart';
+import 'package:doaku/screens/admin/renungan/admin_renungan_screen.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:flutter/material.dart';
 
-import 'admin_account_screen.dart';
+import 'more/admin_more_screen.dart';
 
 
 class AdminDashboardMenu extends StatefulWidget {
@@ -15,7 +16,8 @@ class _AdminDashboardMenuState extends State<AdminDashboardMenu> {
 
   static List<Widget> _widgetOptions = <Widget>[
     AdminBerandaScreen(),
-    AdminAccountScreen(),
+    AdminRenunganScreen(),
+    AdminMoreScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -52,11 +54,23 @@ class _AdminDashboardMenuState extends State<AdminDashboardMenu> {
               backgroundColor:
               (_selectedIndex == 1) ? AppColor.kCream2 : Colors.transparent,
               child: Icon(
+                Icons.pan_tool_outlined,
+                color: AppColor.kBlack,
+              ),
+            ),
+            label: 'Renungan',
+          ),
+          BottomNavigationBarItem(
+            icon: CircleAvatar(
+              radius: 15,
+              backgroundColor:
+              (_selectedIndex == 2) ? AppColor.kCream2 : Colors.transparent,
+              child: Icon(
                 Icons.account_circle_sharp,
                 color: AppColor.kBlack,
               ),
             ),
-            label: 'Akun',
+            label: 'More',
           ),
         ],
         currentIndex: _selectedIndex,

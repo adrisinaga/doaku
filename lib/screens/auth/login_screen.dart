@@ -1,4 +1,4 @@
-import 'package:doaku/screens/admin/admin_beranda_screen.dart';
+import 'package:doaku/screens/admin/admin_dashboard_menu.dart';
 import 'package:doaku/screens/user/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:doaku/utils/lib.dart';
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }else{
           if(emailController.text=='admin' && passwordController.text=='admin'){
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => AdminBerandaScreen()));
+                context, MaterialPageRoute(builder: (context) => AdminDashboardMenu()));
           }else{
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => DashboardMenu()));

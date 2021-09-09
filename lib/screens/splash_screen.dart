@@ -2,12 +2,13 @@
 import 'package:doaku/core/cubit/auth/auth_bloc.dart';
 import 'package:doaku/core/cubit/auth/auth_event.dart';
 import 'package:doaku/core/cubit/auth/auth_state.dart';
-import 'package:doaku/screens/admin/admin_beranda_screen.dart';
+import 'package:doaku/screens/admin/beranda/admin_beranda_screen.dart';
 import 'package:doaku/screens/admin/admin_dashboard_menu.dart';
 import 'package:doaku/screens/auth/login_screen.dart';
 import 'package:doaku/screens/user/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
 import 'package:doaku/utils/constant.dart';
+import 'package:doaku/utils/lib.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,16 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ),
                 ),
-                Align(
-                  heightFactor: size.height * 0.0140,
-                  alignment: Alignment.center,
-                  child: CupertinoTheme(
-                    data: CupertinoTheme.of(context).copyWith(brightness: Brightness.light),
-                    child: CupertinoActivityIndicator(
-                      radius: 10,
-                    ),
-                  ),
-                ),
+                circularProgressIndicator(context),
                 SizedBox(
                   height: size.height * 0.1,
                 ),

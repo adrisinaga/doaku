@@ -40,6 +40,7 @@ class Datum {
     @required this.isiDoa,
     @required this.idUser,
     @required this.totalPrayed,
+    @required this.userName,
     @required this.createdAt,
     @required this.updatedAt,
   });
@@ -48,6 +49,7 @@ class Datum {
   final String? isiDoa;
   final String? idUser;
   final String? totalPrayed;
+  final String? userName;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -56,6 +58,7 @@ class Datum {
     String? isiDoa,
     String? idUser,
     String? totalPrayed,
+    String? userName,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) =>
@@ -63,6 +66,7 @@ class Datum {
         id: id ?? this.id,
         isiDoa: isiDoa ?? this.isiDoa,
         idUser: idUser ?? this.idUser,
+        userName: userName ?? this.userName,
         totalPrayed: totalPrayed?? this.totalPrayed,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -72,6 +76,7 @@ class Datum {
     id: json["id"],
     isiDoa: json["isi_doa"],
     idUser: json["id_user"],
+    userName: json["nama"],
     totalPrayed: json["jumlah_orang_berdoa"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
@@ -81,6 +86,7 @@ class Datum {
     "id": id,
     "isi_doa": isiDoa,
     "id_user": idUser,
+    "nama": userName,
     "jumlah_orang_berdoa": totalPrayed,
     "created_at": createdAt!.toIso8601String(),
     "updated_at": updatedAt!.toIso8601String(),

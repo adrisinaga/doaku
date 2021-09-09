@@ -51,7 +51,7 @@ class AdminBerandaScreen extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: circularProgressIndicator(context));
                 }
               },
             ),
@@ -76,6 +76,7 @@ class ItemDoa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(doaModel?.data?[index!].userName);
     return Row(
       children: [
         Expanded(
@@ -123,7 +124,7 @@ class ItemDoa extends StatelessWidget {
                           ),
                           // spacer5,
                           Text(
-                            'Maria Lestari',
+                            '${doaModel?.data?[index!].userName.toString()}',
                             style: styleSmallDetail.copyWith(fontSize: 10),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
