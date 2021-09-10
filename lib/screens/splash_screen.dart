@@ -1,4 +1,3 @@
-
 import 'package:doaku/core/cubit/auth/auth_bloc.dart';
 import 'package:doaku/core/cubit/auth/auth_event.dart';
 import 'package:doaku/core/cubit/auth/auth_state.dart';
@@ -28,32 +27,32 @@ class _SplashScreenState extends State<SplashScreen> {
     bloc.add(AppStarted());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
-
     Size size = MediaQuery.of(context).size;
 
-    return BlocListener<AuthBloc,AuthState>(
+    return BlocListener<AuthBloc, AuthState>(
       bloc: bloc,
-      listener: (context, state){
-        if(state is AuthAuthenticated){
-          print('Authenticated');
+      listener: (context, state) {
+        if (state is AuthAuthenticated) {
           Navigator.pop(context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AdminDashboardMenu()),
-          );
-        }
-        else if(state is AuthUnauthenticated){
-          print('not authenticated');
+          state.role == 'admin'
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AdminDashboardMenu()),
+                )
+              : Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardMenu()),
+                );
+        } else if (state is AuthUnauthenticated) {
           Navigator.pop(context);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => LoginScreen()),
           );
-        }
-        else{
+        } else {
           print('not defined');
         }
       },
@@ -63,7 +62,10 @@ class _SplashScreenState extends State<SplashScreen> {
           bottom: true,
           minimum: EdgeInsets.only(top: size.height * 0.12),
           child: Container(
+            width: size.width,
+            height: size.height,
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 ClipOval(
                   child: Container(
@@ -86,18 +88,16 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: TextStyle(
                           fontSize: 37,
                           fontWeight: FontWeight.bold,
-                          color: AppColor.kBlack
-                      ),
+                          color: AppColor.kBlack),
                     ),
                   ),
                 ),
                 circularProgressIndicator(context),
-                SizedBox(
-                  height: size.height * 0.1,
-                ),
-                Expanded(
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(bottom: size.height * .05),
                   child: Align(
-                    alignment: Alignment.center,
+                    alignment: Alignment.bottomCenter,
                     child: Text(
                       "© DoaKu. 2021 All Right Reserved.",
                       style: TextStyle(fontSize: 12, color: AppColor.kBlack),

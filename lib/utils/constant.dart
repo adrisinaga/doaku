@@ -1,6 +1,7 @@
 
 
 String baseUrl = "https://carryu.id/doa/";
+String urlLogin = "login";
 String urlDoa = "doa";
 String urlBerdoa = "berdoa";
 

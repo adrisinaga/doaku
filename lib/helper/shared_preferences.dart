@@ -13,7 +13,7 @@ class SharedPreferencesHelper {
 
   static Future<bool> isAuthenticated() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(IS_AUTHENTICATED) ?? true;
+    return prefs.getBool(IS_AUTHENTICATED) ?? false;
   }
 
   static setAccount(String data) async {

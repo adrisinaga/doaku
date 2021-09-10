@@ -1,3 +1,6 @@
+import 'package:doaku/core/cubit/auth/auth_bloc.dart';
+import 'package:doaku/core/cubit/auth/auth_event.dart';
+import 'package:doaku/core/cubit/auth/auth_state.dart';
 import 'package:doaku/screens/admin/admin_dashboard_menu.dart';
 import 'package:doaku/screens/user/dashboard_menu.dart';
 import 'package:doaku/utils/color.dart';
@@ -5,6 +8,7 @@ import 'package:doaku/utils/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'widget/bezier_container.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key, this.title}) : super(key: key);
@@ -18,6 +22,97 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final bloc = AuthBloc();
+
+  void login(BuildContext context) async {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    bloc.add(Login(
+        username: emailController.text, password: passwordController.text));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    return Scaffold(
+        body: BlocListener<AuthBloc, AuthState>(
+      bloc: bloc,
+      listener: (context, state) {
+        if (state is AuthLoginSuccess) {
+
+          print(state.loginModel?.data);
+          if(state.loginModel?.data==[]){
+            snackBarCustom(context, state.loginModel?.status ?? '');
+          }
+          // ignore: unrelated_type_equality_checks
+          if (state.loginModel?.data?[0] == []) {
+            print('user tidak ditemukan');
+            snackBarCustom(context, state.loginModel?.status ?? '');
+          } else {
+            print('YOOWWWW');
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                    state.loginModel?.data?.map((e) => e.role).first == 'admin'
+                        ? AdminDashboardMenu()
+                        : DashboardMenu()));
+          }
+        } else if (state is AuthLoginFailed) {
+          snackBarCustom(context, state.errorMessage ?? '');
+        }
+      },
+      child: Container(
+        color: AppColor.kCream,
+        height: height,
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+                top: -height * .15,
+                right: -MediaQuery.of(context).size.width * .6,
+                child: BezierContainer()),
+            Positioned(
+                top: -height * .25,
+                right: -MediaQuery.of(context).size.width * .5,
+                child: BezierContainer()),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: height * .2),
+                    _title(),
+                    SizedBox(height: 50),
+                    _emailPasswordWidget(),
+                    SizedBox(height: 20),
+                    _submitButton(context),
+                    GestureDetector(
+                      onTap: () {
+                        print('forget password');
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.centerRight,
+                        child: Text('Forgot Password ?',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w500)),
+                      ),
+                    ),
+                    // _divider(),
+                    // _googleButton(),
+                    SizedBox(height: height * .055),
+                    _createAccountLabel(),
+                  ],
+                ),
+              ),
+            ),
+            // Positioned(top: 40, left: 0, child: _backButton()),
+          ],
+        ),
+      ),
+    ));
+  }
 
   Widget _backButton() {
     return InkWell(
@@ -59,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
             obscureText: isPassword,
             decoration: InputDecoration(
               border: InputBorder.none,
-              fillColor: Color(0xfff3f3f4),
+              fillColor: AppColor.kWhite,
               filled: true,
             ),
           )
@@ -68,19 +163,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _submitButton() {
+  Widget _submitButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(emailController.text.isEmpty && passwordController.text.isEmpty){
-          snackBarCustom(context, 'Lengkapi data');
-        }else{
-          if(emailController.text=='admin' && passwordController.text=='admin'){
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => AdminDashboardMenu()));
-          }else{
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => DashboardMenu()));
-          }
+        if (emailController.text.isEmpty && passwordController.text.isEmpty) {
+          snackBarCustom(context, 'Harap lengkapi data');
+        } else {
+          login(context);
         }
       },
       child: Container(
@@ -250,56 +339,5 @@ class _LoginScreenState extends State<LoginScreen> {
         _entryField("Password", passwordController, isPassword: true),
       ],
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    return Scaffold(
-        body: Container(
-      height: height,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-              top: -height * .15,
-              right: -MediaQuery.of(context).size.width * .4,
-              child: BezierContainer()),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: height * .2),
-                  _title(),
-                  SizedBox(height: 50),
-                  _emailPasswordWidget(),
-                  SizedBox(height: 20),
-                  _submitButton(),
-                  GestureDetector(
-                    onTap: () {
-                      print('forget password');
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      alignment: Alignment.centerRight,
-                      child: Text('Forgot Password ?',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500)),
-                    ),
-                  ),
-                  // _divider(),
-                  // _googleButton(),
-                  SizedBox(height: height * .055),
-                  _createAccountLabel(),
-                ],
-              ),
-            ),
-          ),
-          // Positioned(top: 40, left: 0, child: _backButton()),
-        ],
-      ),
-    ));
   }
 }

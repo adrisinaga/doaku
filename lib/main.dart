@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => AuthBloc()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: AppConst.doaku,
         theme: ThemeData(
           indicatorColor: Colors.red,

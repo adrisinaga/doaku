@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:doaku/core/cubit/auth/auth_event.dart';
 import 'package:doaku/core/cubit/auth/auth_state.dart';
+import 'package:doaku/core/model/login_model.dart';
+import 'package:doaku/core/service/services.dart';
 import 'package:doaku/helper/shared_preferences.dart';
 
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-
 
   AuthBloc() : super(AuthUninitialized());
 
@@ -16,28 +18,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final isAuthenticated = await SharedPreferencesHelper.isAuthenticated();
       await Future.delayed(Duration(seconds: 3));
       if (isAuthenticated) {
-        var json = await SharedPreferencesHelper.getAccount();
-        // var account = accountFromMap(json);
-        print('AuthAuthenticated');
-        yield AuthAuthenticated();
+        var account = authModelFromJson(await SharedPreferencesHelper.getAccount());
+        yield AuthAuthenticated(role: '');
       } else {
         print('AuthUnauthenticated');
         yield AuthUnauthenticated();
       }
     }
 
-    if (event is Login) {
+    if (event is Login){
       yield AuthLoading();
       try {
-        // var response = await api.login(username: event.username, password: event.password);
+        var response = await LoginService.login(event.username, event.password);
         // await SharedPreferencesHelper.setApiToken(response.accessToken);
-        // await SharedPreferencesHelper.setAccount(jsonEncode(response.toMap()));
+        await SharedPreferencesHelper.setAccount(jsonEncode(response.value?.toJson()));
         await SharedPreferencesHelper.setAuthenticated(true);
 
-
-        yield AuthLoginSuccess();
+        yield AuthLoginSuccess(loginModel: response.value);
+        print('yesss');
       } catch (error) {
-        yield AuthFailure(errorMessage: error.toString());
+        yield AuthLoginFailed(errorMessage: error.toString());
+        print(error.toString());
+      }
+    }
+
+    if(event is Logout){
+      yield AuthLoading();
+      try{
+        SharedPreferencesHelper.clear();
+        yield AuthLogoutSuccess();
+      }catch(error){
+        yield AuthLogoutFailed(errorMessage: error.toString());
       }
     }
 
